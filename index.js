@@ -13,7 +13,7 @@ function onCardClicked(e) {
     target.className = target.className
         .replace('color-hidden', '')
         .trim()
-target.className += ' done';
+    target.className += ' done';
 
     if (!clickedCard) {
         //if we haven't clicked a card, keep track of the card, display it's color
@@ -21,15 +21,20 @@ target.className += ' done';
     } else if (clickedCard) {
         // if we have already clicked a card, check if the new card matches the old card color
         if (
-            clickedCard.getAttribute('data-color') ===
+            clickedCard.getAttribute('data-color') !==
             target.getAttribute('data-color')
         ) {
-            console.log('cards mot equal');
+  
+                console.log('cards not equal');
+                setTimeout(() => {
+                    console.log('we are here!!!')
+                    clickedCard.className =
+                        clickedCard.className.replace('done', '').trim() + ' color-hidden';
+                    target.className =
+                        target.className.replace('done', '').trim() + ' color-hidden';
+                    clickedCard = null;
+                }, 500);
+            }
 
-            //clickedCard.className += ' done';
-            //target.className += ' done';
-        } else {
-            console.log('cards not equal');
         }
     }
-}
