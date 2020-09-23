@@ -24,8 +24,12 @@ target.className += ' done';
             clickedCard.getAttribute('data-color') ===
             target.getAttribute('data-color')
         ) {
-            clickedCard.className += ' done';
-            target.className += ' done';
+            console.log('cards mot equal');
+
+            //clickedCard.className += ' done';
+            //target.className += ' done';
+        } else {
+            console.log('cards not equal');
         }
     }
 }
