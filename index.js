@@ -1,9 +1,28 @@
 let clickedCard = null;
+let preventClick = false;
+let combosFound = 0;
+
+const  colors = [
+     'pink',
+     'yellow',
+     'red',
+     'cyan',
+     'blue',
+     'teal',
+     'orange',
+     'green',
+ ]
+
+const cards = document.querySelectorAll('.card');
+for (let color of colors) {
+    const cardA = cards[parseInt(math.random() * cards.length)]
+}
 
 function onCardClicked(e) {
     const target = e.currentTarget;
 
     if (
+        preventClick ||
         target === clickedCard ||
         target.className.includes('done')
     ) {
@@ -20,21 +39,31 @@ function onCardClicked(e) {
         clickedCard = target;
     } else if (clickedCard) {
         // if we have already clicked a card, check if the new card matches the old card color
+        preventClick = true;
         if (
             clickedCard.getAttribute('data-color') !==
             target.getAttribute('data-color')
         ) {
-  
-                console.log('cards not equal');
-                setTimeout(() => {
-                    console.log('we are here!!!')
-                    clickedCard.className =
-                        clickedCard.className.replace('done', '').trim() + ' color-hidden';
-                    target.className =
-                        target.className.replace('done', '').trim() + ' color-hidden';
-                    clickedCard = null;
-                }, 500);
-            }
+            preventClick = true;
 
+            console.log('cards not equal');
+            setTimeout(() => {
+                console.log('we are here!!!')
+                clickedCard.className =
+                    clickedCard.className.replace('done', '').trim() + ' color-hidden';
+                target.className =
+                    target.className.replace('done', '').trim() + ' color-hidden';
+                clickedCard = null;
+                preventClick = false;
+            }, 500);
+        } else {
+            combosFound++;
+            clickedCard = null;
+            preventClick = false;
+            if(combosFound === 8) {
+                alert('YOU WIN');
+            } 
+            
         }
     }
+}
